@@ -21,8 +21,8 @@ export default function Home() {
     let picture3Url = "";
     let picture4Url = "";
     
-     // Function to upload picture to Firebase Storage and get its URL
-     const uploadPictureAndGetUrl = async (inputId: string, storagePath: string): Promise<string> => {
+    // Function to upload picture to Firebase Storage and get its URL
+    const uploadPictureAndGetUrl = async (inputId: string, storagePath: string): Promise<string> => {
       if (inputId === 'picture1' || inputId === 'picture2' || inputId === 'picture3' || inputId === 'picture4') {
         const file = formData.service[inputId as keyof typeof formData.service];
     
