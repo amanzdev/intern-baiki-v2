@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "100" });
-const sourceSerif4 = Source_Serif_4({ subsets: ["latin"] });
 
 export default function Home() {
   const [companyData, setCompanyData] = useState<DocumentData[]>([]);
