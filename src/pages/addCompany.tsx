@@ -1,16 +1,26 @@
 import SEOHead from "@/components/SEOHead";
 import { Menu } from "@headlessui/react";
-import { Source_Serif_4 } from "next/font/google";
+import { Poppins, Source_Serif_4 } from "next/font/google";
 import Link from "next/link";
 import { addData } from "../../backend/firebase";
 import { useRouter } from "next/router";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getStorage } from "firebase/storage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+const poppins = Poppins({ subsets: ["latin"], weight:"100" });
 const sourceSerif4 = Source_Serif_4({ subsets: ["latin"] });
 
 export default function Home() {
+  // Apply the "Poppins" font to the entire page
+  useEffect(() => {
+    // Check if we are in the browser environment
+    if (typeof window !== 'undefined') {
+      // Set the "Poppins" font for the body element
+      document.body.style.fontFamily = "Poppins, sans-serif";
+    }
+  }, []);
+
   const router = useRouter();
   const storage = getStorage();
 

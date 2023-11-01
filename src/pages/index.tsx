@@ -4,13 +4,25 @@ import { Source_Serif_4 } from "next/font/google";
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import { fetchCompanyData, fetchCompanyDataById } from "../../backend/firebase";
-import { DocumentData, documentId } from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
 import { useRouter } from "next/router";
+import { Poppins } from "next/font/google";
 
+const poppins = Poppins({ subsets: ["latin"], weight: "100" });
 const sourceSerif4 = Source_Serif_4({ subsets: ["latin"] });
 
 export default function Home() {
   const [companyData, setCompanyData] = useState<DocumentData[]>([]);
+
+  // Apply the "Poppins" font to the entire page
+  useEffect(() => {
+    // Check if we are in the browser environment
+    if (typeof window !== 'undefined') {
+      // Set the "Poppins" font for the body element
+      document.body.style.fontFamily = "Poppins, sans-serif";
+      document.head.style.fontFamily = "Poppins, sans-serif";
+    }
+  }, []);
 
   useEffect(() => {
     // Fetch company data when the component mounts
