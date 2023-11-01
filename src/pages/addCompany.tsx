@@ -1,6 +1,6 @@
 import SEOHead from "@/components/SEOHead";
 import { Menu } from "@headlessui/react";
-import { Source_Serif_4 } from "next/font/google";
+import { Poppins, Source_Serif_4 } from "next/font/google";
 import Link from "next/link";
 import { addData } from "../../backend/firebase";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import { getStorage } from "firebase/storage";
 import { useState } from "react";
 
 const sourceSerif4 = Source_Serif_4({ subsets: ["latin"] });
+const poppins = Poppins({ subsets: ["latin"], weight: "400", style: "normal" })
 
 export default function Home() {
   const router = useRouter();
@@ -378,7 +379,7 @@ export default function Home() {
                       type="text" 
                       name="name" 
                       id="name" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: Kedai Baiki Kami" 
                       required 
                       value={formData.companyInformation.name} onChange={(e) => handleInputChange('companyInformation', 'name', e.target.value)}
@@ -394,7 +395,7 @@ export default function Home() {
                       type="text" 
                       name="address" 
                       id="address" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: Mercu Summer Suites, Jalan Cendana" 
                       required 
                       value={formData.companyInformation.address} onChange={(e) => handleInputChange('companyInformation', 'address', e.target.value)}
@@ -410,7 +411,7 @@ export default function Home() {
                       type="text" 
                       name="postcode" 
                       id="postcode" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: 50250" 
                       required 
                       value={formData.companyInformation.postcode} onChange={(e) => handleInputChange('companyInformation', 'postcode', e.target.value)}
@@ -426,7 +427,7 @@ export default function Home() {
                       type="text" 
                       name="district" 
                       id="district" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: Ampang" 
                       required 
                       value={formData.companyInformation.district} onChange={(e) => handleInputChange('companyInformation', 'district', e.target.value)}
@@ -442,7 +443,7 @@ export default function Home() {
                       type="text" 
                       name="state" 
                       id="state" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: Selangor" 
                       required 
                       value={formData.companyInformation.state} onChange={(e) => handleInputChange('companyInformation', 'state', e.target.value)}
@@ -458,7 +459,7 @@ export default function Home() {
                       type="text" 
                       name="location" 
                       id="location" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: 3.158880209637858, 101.70491202420591" 
                       required 
                       value={formData.companyInformation.location} onChange={(e) => handleInputChange('companyInformation', 'location', e.target.value)}
@@ -535,7 +536,7 @@ export default function Home() {
                       type="text"
                       name="description"
                       id="description"
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500"
+                      className="rounded-xl w-full ml-2"
                       placeholder="Cth: Kedai Baiki Kami"
                       value={formData.service.description}
                       onChange={(e) => handleInputChange('service', 'description', e.target.value)}
@@ -552,7 +553,7 @@ export default function Home() {
                       type="time"
                       name="time"
                       id="timeStart"
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500"
+                      className="rounded-xl w-full ml-2"
                       value={formData.service.timeStart}
                       onChange={(e) => handleInputChange('service', 'timeStart', e.target.value)}
                       required
@@ -561,7 +562,7 @@ export default function Home() {
                       type="time"
                       name="time"
                       id="timeEnd"
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500"
+                      className="rounded-xl w-full ml-2"
                       value={formData.service.timeEnd}
                       onChange={(e) => handleInputChange('service', 'timeEnd', e.target.value)}
                       required
@@ -625,7 +626,7 @@ export default function Home() {
                       type="email" 
                       name="email" 
                       id="email" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: amanz@dev.my" 
                       required 
                       value={formData.contactUs.email} 
@@ -642,7 +643,7 @@ export default function Home() {
                       type="tel" 
                       name="contact" 
                       id="contact" 
-                      className="rounded-xl w-full ml-2 required:border-red-500 required:border-2 valid:border-green-500" 
+                      className="rounded-xl w-full ml-2" 
                       placeholder="Cth: 0123456789" 
                       required 
                       value={formData.contactUs.contact} 
