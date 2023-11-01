@@ -29,7 +29,4 @@
   h6 {
     @apply text-lg;
   }
-  body {
-    font-family: Poppins, sans-serif;
-  }
 }

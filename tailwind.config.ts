@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { Poppins } from "next/font/google";
 
 const config: Config = {
   content: [
@@ -11,7 +12,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
         serif: ["Source Serif 4", "serif"],
-        poppins: ["Poppins", "sans-serif"]
+        poppins: [`${Poppins}`, "sans-serif"]
       },
     },
   },

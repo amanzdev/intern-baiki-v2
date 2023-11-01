@@ -1,15 +1,11 @@
 import SEOHead from "@/components/SEOHead";
 import { Menu } from "@headlessui/react";
-import { Poppins, Source_Serif_4 } from "next/font/google";
 import Link from "next/link";
 import { addData } from "../../backend/firebase";
 import { useRouter } from "next/router";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getStorage } from "firebase/storage";
 import { useState } from "react";
-
-const sourceSerif4 = Source_Serif_4({ subsets: ["latin"] });
-const poppins = Poppins({ subsets: ["latin"], weight: "400", style: "normal" })
 
 export default function Home() {
   const router = useRouter();
@@ -220,7 +216,7 @@ export default function Home() {
     "The most comprehensive list for repair services in Malaysia. Find the closest repair centre for you!";
 
   return (
-    <div className="flex flex-col bg-white">
+    <div className="flex flex-col bg-white font-poppins">
       {/* Header Desktop */}
       <header className="relative z-10 flex items-center p-2" style={{ backgroundColor: "#FF1E26" }}>
         <div className="hidden sm:inline-flex">
