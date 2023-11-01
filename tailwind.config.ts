@@ -11,6 +11,7 @@ const config: Config = {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
         serif: ["Source Serif 4", "serif"],
+        poppins: ["Poppins", "sans-serif"]
       },
     },
   },
