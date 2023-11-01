@@ -67,7 +67,6 @@ export default function Home() {
         return "";
       }
     };
-    
 
     // Upload pictures and get their URLs
     picture1Url = await uploadPictureAndGetUrl("picture1", `images/${formData.companyInformation.name}/picture1.jpg`);
@@ -78,6 +77,34 @@ export default function Home() {
     // Handle checkboxes and create an array of selected types
     const selectedTypes = Array.from(document.querySelectorAll('input[name="type"]:checked')).map((checkbox) => (checkbox as HTMLInputElement).value);
     
+    // Check for errors before submitting
+    if (!formData.companyInformation.name) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        companyInformation: {
+          ...prevErrors.companyInformation,
+          name: "Nama diperlukan",
+          address: "Alamat diperlukan",
+          postcode: "Poskod diperlukan",
+          district: "Bandar diperlukan",
+          state: "Negeri diperlukan",
+          location: "Lokasi diperlukan",
+        },
+        service: {
+          ...prevErrors.service,
+          description: "Deskripsi diperlukan",
+          timeStart: "Masa diperlukan",
+          timeEnd: "Masa diperlukan",
+        },
+        contactUs: {
+          ...prevErrors.contactUs,
+          contact: "Nombor telefon diperlukan",
+          email: "Emel diperlukan",
+        }
+      }));
+      return; // Prevent submission
+    }
+
     const dataToSubmit = {
       name: formData.companyInformation.name,
       address: formData.companyInformation.address,
@@ -166,6 +193,48 @@ export default function Home() {
     },
   });
 
+  const [errors, setErrors] = useState({
+    companyInformation: {
+      name: '',
+      address: '',
+      postcode: '',
+      district: '',
+      state: '',
+      location: '',
+    },
+    service: {
+      type: [] as string[],
+      description: '',
+      timeStart: '',
+      timeEnd: '',
+      picture1: '',
+      picture2: '',
+      picture3: '',
+      picture4: '',
+    },
+    contactUs: {
+      email: '',
+      contact: '',
+      websiteUrl: '',
+      instagramUrl: '',
+      twitterUrl: '',
+      facebookUrl: '',
+    },
+  });
+
+  const handleBlur = (tab: keyof FormData, field: string) => {
+    // Check for errors when the input loses focus
+    if (!formData[tab as keyof FormData][field as keyof FormData[keyof FormData]]) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [tab]: {
+          ...prevErrors[tab as keyof typeof prevErrors],
+          [field]: "Required",
+        },
+      }));
+    }
+  };  
+
   const handleInputChange = (tab: keyof FormData, field: string, value: any) => {
     setFormData((prevData) => {
       if (tab === 'service' && (field === 'picture1' || field === 'picture2' || field === 'picture3' || field === 'picture4')) {
@@ -202,8 +271,15 @@ export default function Home() {
         },
       };
     });
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [tab]: {
+        ...prevErrors[tab],
+        [field]: "", // Clear the error message
+      },
+    }));
   };
-  
   
   // Function to switch tabs
   const switchTab = (tabName: string) => {
@@ -347,20 +423,29 @@ export default function Home() {
               </a>
             </div>
             <div className="flex w-full items-center py-4">
-              <div className="tab border-solid border-2 mx-auto px-10 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600" onClick={() => switchTab("companyInformation")}>
+            <div
+              className={`tab border-solid border-2 mx-auto px-10 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "companyInformation" ? "bg-red-500 text-white" : ""}`}
+              onClick={() => switchTab("companyInformation")}
+              >
                 <button className="tablinks">
                   Maklumat Kedai
                 </button>
               </div>
-              <div className="tab border-solid border-2 mx-auto px-10 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600" onClick={() => switchTab("service")}>
-                <button className="tablinks">
-                  Servis
-                </button>
+              <div 
+                className={`tab border-solid border-2 mx-auto px-10 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "service" ? "bg-red-500 text-white" : ""}`}
+                onClick={() => switchTab("service")}
+                >
+                  <button className="tablinks">
+                    Servis
+                  </button>
               </div>
-              <div className="tab border-solid border-2 mx-auto px-10 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600" onClick={() => switchTab("contactUs")}>
-                <button className="tablinks">
-                  Hubungi Kami
-                </button>
+              <div 
+                className={`tab border-solid border-2 mx-auto px-10 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "contactUs" ? "bg-red-500 text-white" : ""}`}
+                onClick={() => switchTab("contactUs")}
+                >
+                  <button className="tablinks">
+                    Hubungi Kami
+                  </button>
               </div>
             </div>
             {/* Form Sections */}
@@ -375,12 +460,19 @@ export default function Home() {
                       type="text" 
                       name="name" 
                       id="name" 
-                      className="rounded-xl w-full ml-2" 
+                      className={`rounded-xl w-full ml-2 ${
+                        errors.companyInformation.name && "border-red-500 border-2" // Add red border on error
+                      }`}
                       placeholder="Cth: Kedai Baiki Kami" 
                       required 
-                      value={formData.companyInformation.name} onChange={(e) => handleInputChange('companyInformation', 'name', e.target.value)}
+                      value={formData.companyInformation.name} 
+                      onBlur={() => handleBlur("companyInformation", "name")} // Validate when input loses focus
+                      onChange={(e) => handleInputChange('companyInformation', 'name', e.target.value)}
                     />
                   </div>
+                  {errors.companyInformation.name && (
+                    <p className="text-red-500 px-4">Nama diperlukan</p> // Show error message
+                  )}
                 </div>
                 <div className="flex w-full mt-2 flex-col">
                   <div className="flex flex-row px-4 mb-2">
@@ -391,43 +483,66 @@ export default function Home() {
                       type="text" 
                       name="address" 
                       id="address" 
-                      className="rounded-xl w-full ml-2" 
+                      className={`rounded-xl w-full ml-2 ${
+                        errors.companyInformation.address && "border-red-500 border-2" // Add red border on error
+                      }`}
                       placeholder="Cth: Mercu Summer Suites, Jalan Cendana" 
                       required 
-                      value={formData.companyInformation.address} onChange={(e) => handleInputChange('companyInformation', 'address', e.target.value)}
+                      value={formData.companyInformation.address} 
+                      onBlur={() => handleBlur("companyInformation", "address")} // Validate when input loses focus
+                      onChange={(e) => handleInputChange('companyInformation', 'address', e.target.value)}
                     />
                   </div>
+                  {errors.companyInformation.address && (
+                    <p className="text-red-500 px-4">Alamat diperlukan</p> // Show error message
+                  )}
                 </div>
-                <div className="flex w-full mt-2 flex-col">
-                  <div className="flex flex-row px-4 mb-2">
-                    <label htmlFor="postcode">Poskod</label>
+                <div className="flex flex-row">
+                  <div className="flex w-full mt-2 flex-col">
+                    <div className="flex flex-row px-4 mb-2">
+                      <label htmlFor="postcode">Poskod</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <input 
+                        type="text" 
+                        name="postcode" 
+                        id="postcode" 
+                        className={`rounded-xl w-full ml-2 ${
+                          errors.companyInformation.postcode && "border-red-500 border-2" // Add red border on error
+                        }`}
+                        placeholder="Cth: 50250" 
+                        required 
+                        value={formData.companyInformation.postcode} 
+                        onBlur={() => handleBlur("companyInformation", "postcode")} // Validate when input loses focus
+                        onChange={(e) => handleInputChange('companyInformation', 'postcode', e.target.value)}
+                      />
+                    </div>
+                    {errors.companyInformation.postcode && (
+                      <p className="text-red-500 px-4">Poskod diperlukan</p> // Show error message
+                    )}
                   </div>
-                  <div className="flex flex-row">
-                    <input 
-                      type="text" 
-                      name="postcode" 
-                      id="postcode" 
-                      className="rounded-xl w-full ml-2" 
-                      placeholder="Cth: 50250" 
-                      required 
-                      value={formData.companyInformation.postcode} onChange={(e) => handleInputChange('companyInformation', 'postcode', e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="flex w-full mt-2 flex-col">
-                  <div className="flex flex-row px-4 mb-2">
-                    <label htmlFor="district">Bandar</label>
-                  </div>
-                  <div className="flex flex-row">
-                    <input 
-                      type="text" 
-                      name="district" 
-                      id="district" 
-                      className="rounded-xl w-full ml-2" 
-                      placeholder="Cth: Ampang" 
-                      required 
-                      value={formData.companyInformation.district} onChange={(e) => handleInputChange('companyInformation', 'district', e.target.value)}
-                    />
+                  <div className="flex w-full mt-2 flex-col">
+                    <div className="flex flex-row px-4 mb-2">
+                      <label htmlFor="district">Bandar</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <input 
+                        type="text" 
+                        name="district" 
+                        id="district" 
+                        className={`rounded-xl w-full ml-2 ${
+                          errors.companyInformation.district && "border-red-500 border-2" // Add red border on error
+                        }`}
+                        placeholder="Cth: Ampang" 
+                        required 
+                        value={formData.companyInformation.district} 
+                        onBlur={() => handleBlur("companyInformation", "district")} // Validate when input loses focus
+                        onChange={(e) => handleInputChange('companyInformation', 'district', e.target.value)}
+                      />
+                    </div>
+                    {errors.companyInformation.district && (
+                      <p className="text-red-500 px-4">Bandar diperlukan</p> // Show error message
+                    )}
                   </div>
                 </div>
                 <div className="flex w-full mt-2 flex-col">
@@ -439,12 +554,19 @@ export default function Home() {
                       type="text" 
                       name="state" 
                       id="state" 
-                      className="rounded-xl w-full ml-2" 
+                      className={`rounded-xl w-full ml-2 ${
+                        errors.companyInformation.state && "border-red-500 border-2" // Add red border on error
+                      }`}
                       placeholder="Cth: Selangor" 
                       required 
-                      value={formData.companyInformation.state} onChange={(e) => handleInputChange('companyInformation', 'state', e.target.value)}
+                      value={formData.companyInformation.state} 
+                      onBlur={() => handleBlur("companyInformation", "state")} // Validate when input loses focus
+                      onChange={(e) => handleInputChange('companyInformation', 'state', e.target.value)}
                     />
                   </div>
+                  {errors.companyInformation.state && (
+                    <p className="text-red-500 px-4">Negeri diperlukan</p> // Show error message
+                  )}
                 </div>
                 <div className="flex w-full mt-2 flex-col">
                   <div className="flex flex-row px-4 mb-2">
@@ -455,12 +577,19 @@ export default function Home() {
                       type="text" 
                       name="location" 
                       id="location" 
-                      className="rounded-xl w-full ml-2" 
+                      className={`rounded-xl w-full ml-2 ${
+                        errors.companyInformation.location && "border-red-500 border-2" // Add red border on error
+                      }`}
                       placeholder="Cth: 3.158880209637858, 101.70491202420591" 
                       required 
-                      value={formData.companyInformation.location} onChange={(e) => handleInputChange('companyInformation', 'location', e.target.value)}
+                      value={formData.companyInformation.location} 
+                      onBlur={() => handleBlur("companyInformation", "location")} // Validate when input loses focus
+                      onChange={(e) => handleInputChange('companyInformation', 'location', e.target.value)}
                     />
                   </div>
+                  {errors.companyInformation.location && (
+                    <p className="text-red-500 px-4">Lokasi diperlukan</p> // Show error message
+                  )}
                 </div>
               </>
             )}
@@ -532,13 +661,19 @@ export default function Home() {
                       type="text"
                       name="description"
                       id="description"
-                      className="rounded-xl w-full ml-2"
+                      className={`rounded-xl w-full ml-2 ${
+                        errors.service.description && "border-red-500 border-2" // Add red border on error
+                      }`}
                       placeholder="Cth: Kedai Baiki Kami"
                       value={formData.service.description}
+                      onBlur={() => handleBlur("service", "description")} // Validate when input loses focus
                       onChange={(e) => handleInputChange('service', 'description', e.target.value)}
                       required
                     />
                   </div>
+                  {errors.service.description && (
+                    <p className="text-red-500 px-4">Deskripsi diperlukan</p> // Show error message
+                  )}
                 </div>
                 <div className="flex w-full mt-2 flex-col">
                   <div className="flex flex-row px-4 mb-2">
@@ -549,8 +684,11 @@ export default function Home() {
                       type="time"
                       name="time"
                       id="timeStart"
-                      className="rounded-xl w-full ml-2"
+                      className={`rounded-xl w-full ml-2 ${
+                        errors.service.timeStart && "border-red-500 border-2" // Add red border on error
+                      }`}
                       value={formData.service.timeStart}
+                      onBlur={() => handleBlur("service", "timeStart")} // Validate when input loses focus
                       onChange={(e) => handleInputChange('service', 'timeStart', e.target.value)}
                       required
                     />
@@ -558,11 +696,26 @@ export default function Home() {
                       type="time"
                       name="time"
                       id="timeEnd"
-                      className="rounded-xl w-full ml-2"
+                      className={`rounded-xl w-full ml-2 ${
+                        errors.service.timeEnd && "border-red-500 border-2" // Add red border on error
+                      }`}
                       value={formData.service.timeEnd}
+                      onBlur={() => handleBlur("service", "timeEnd")} // Validate when input loses focus
                       onChange={(e) => handleInputChange('service', 'timeEnd', e.target.value)}
                       required
                     />
+                  </div>
+                  <div className="flex flex-row">
+                    <div className="flex flex-row w-full">
+                      {errors.service.timeStart && (
+                        <p className="text-red-500 px-4">Masa diperlukan</p> // Show error message
+                      )}
+                    </div>
+                    <div className="flex flex-row w-full">
+                      {errors.service.timeEnd && (
+                        <p className="text-red-500 px-4">Masa diperlukan</p> // Show error message
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="flex w-full items-center mt-2">
@@ -613,38 +766,52 @@ export default function Home() {
             )}
             {activeTab === 'contactUs' && (
               <>
-                <div className="flex w-full flex-col">
-                  <div className="flex flex-row px-4 mb-2">
-                    <label htmlFor="email">Emel</label>
+                <div className="flex flex-row">
+                  <div className="flex w-full flex-col">
+                    <div className="flex flex-row px-4 mb-2">
+                      <label htmlFor="email">Emel</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <input 
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        className={`rounded-xl w-full ml-2 ${
+                          errors.contactUs.email && "border-red-500 border-2" // Add red border on error
+                        }`}
+                        placeholder="Cth: amanz@dev.my" 
+                        required 
+                        value={formData.contactUs.email} 
+                        onBlur={() => handleBlur("contactUs", "email")} // Validate when input loses focus
+                        onChange={(e) => handleInputChange('contactUs', 'email', e.target.value)}
+                      />
+                    </div>
+                    {errors.contactUs.email && (
+                      <p className="text-red-500 px-4">Emel diperlukan</p> // Show error message
+                    )}
                   </div>
-                  <div className="flex flex-row">
-                    <input 
-                      type="email" 
-                      name="email" 
-                      id="email" 
-                      className="rounded-xl w-full ml-2" 
-                      placeholder="Cth: amanz@dev.my" 
-                      required 
-                      value={formData.contactUs.email} 
-                      onChange={(e) => handleInputChange('contactUs', 'email', e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="flex w-full mt-2 flex-col">
-                  <div className="flex flex-row px-4 mb-2">
-                    <label htmlFor="contact">Nombor Telefon</label>
-                  </div>
-                  <div className="flex flex-row">
-                    <input 
-                      type="tel" 
-                      name="contact" 
-                      id="contact" 
-                      className="rounded-xl w-full ml-2" 
-                      placeholder="Cth: 0123456789" 
-                      required 
-                      value={formData.contactUs.contact} 
-                      onChange={(e) => handleInputChange('contactUs', 'contact', e.target.value)}
-                    />
+                  <div className="flex w-full flex-col">
+                    <div className="flex flex-row px-4 mb-2">
+                      <label htmlFor="contact">Nombor Telefon</label>
+                    </div>
+                    <div className="flex flex-row">
+                      <input 
+                        type="tel" 
+                        name="contact" 
+                        id="contact" 
+                        className={`rounded-xl w-full ml-2 ${
+                          errors.contactUs.contact && "border-red-500 border-2" // Add red border on error
+                        }`}
+                        placeholder="Cth: 0123456789" 
+                        required 
+                        value={formData.contactUs.contact} 
+                        onBlur={() => handleBlur("contactUs", "contact")} // Validate when input loses focus
+                        onChange={(e) => handleInputChange('contactUs', 'contact', e.target.value)}
+                      />
+                    </div>
+                    {errors.contactUs.contact && (
+                      <p className="text-red-500 px-4">Nombor telefon diperlukan</p> // Show error message
+                    )}
                   </div>
                 </div>
                 <div className="flex w-full mt-2 flex-col">
