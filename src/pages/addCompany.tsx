@@ -1,5 +1,4 @@
 import SEOHead from "@/components/SEOHead";
-import { Menu } from "@headlessui/react";
 import Link from "next/link";
 import { addData } from "../../backend/firebase";
 import { useRouter } from "next/router";
@@ -392,7 +391,7 @@ export default function Home() {
     "The most comprehensive list for repair services in Malaysia. Find the closest repair centre for you!";
 
   return (
-    <div className="flex flex-col bg-white font-poppins">
+    <div className="flex flex-col bg-white">
       {/* Header Desktop */}
       <header className="relative z-10 flex items-center p-2" style={{ backgroundColor: "#FF1E26" }}>
         <div className="hidden sm:inline-flex">
@@ -969,12 +968,12 @@ export default function Home() {
         <div className="mx-auto mb-16 mt-4 max-w-6xl px-4 py-2 md:hidden bg-white flex-row">
           <div className="flex flex-col">
             <div className="flex w-full items-center py-1">
-              <a className="font-semibold text-4xl">
+              <a className="font-semibold text-2xl">
                 Tambah Kedai
               </a>
             </div>
             <div className="flex w-full items-center py-1">
-              <a className="font-thin">
+              <a className="font-thin text-sm">
                 Tambah atau kemaskini maklumat mengenai kedai anda
               </a>
             </div>
