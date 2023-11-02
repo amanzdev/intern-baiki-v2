@@ -275,6 +275,22 @@ export default function Home() {
 
   const handleInputChange = (tab: keyof FormData, field: string, value: any) => {
     setFormData((prevData) => {
+      if (tab === 'companyInformation' && field === 'postcode') {
+        // Check if the value is a 5-digit number using a regular expression
+        if (/^\d{5}$/.test(value)) {
+          // Valid 5-digit number
+        } else {
+          // Invalid, show an error message
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [tab]: {
+              ...prevErrors[tab],
+              [field]: value,
+            },
+          }));
+        }
+      }
+
       if (tab === 'service' && (field === 'picture1' || field === 'picture2' || field === 'picture3' || field === 'picture4')) {
         // For picture inputs in the 'service' section
         return {
@@ -314,6 +330,22 @@ export default function Home() {
           },
         };
       }
+
+      if (tab === 'contactUs' && field === 'contact') {
+      // Check if the value is a 10 or 11-digit number using a regular expression
+      if (/^\d{10,11}$/.test(value)) {
+        // Valid 10-11 digit number
+      } else {
+        // Invalid, show an error message
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [tab]: {
+            ...prevErrors[tab],
+            [field]: value,
+          },
+        }));
+      }
+    }
   
       return {
         ...prevData,
@@ -570,7 +602,7 @@ export default function Home() {
                       />
                     </div>
                     {errors.companyInformation.postcode && (
-                      <p className="text-red-500 px-4">Poskod diperlukan</p> // Show error message
+                      <p className="text-red-500 px-4">5 digit poskod diperlukan</p> // Show error message
                     )}
                   </div>
                   <div className="flex w-full mt-2 flex-col">
