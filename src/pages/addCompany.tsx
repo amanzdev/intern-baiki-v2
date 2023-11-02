@@ -331,6 +331,22 @@ export default function Home() {
         };
       }
 
+      if (tab === 'contactUs' && field === 'email') {
+        // Check if the value is a valid email address
+        if (/^\S+@\S+\.\S+$/.test(value)) {
+          // Valid email address
+        } else {
+          // Invalid, show an error message
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [tab]: {
+              ...prevErrors[tab],
+              [field]: "Invalid email address",
+            },
+          }));
+        }
+      }
+
       if (tab === 'contactUs' && field === 'contact') {
       // Check if the value is a 10 or 11-digit number using a regular expression
       if (/^\d{10,11}$/.test(value)) {
