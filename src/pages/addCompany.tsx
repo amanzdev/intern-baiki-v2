@@ -980,7 +980,7 @@ export default function Home() {
             </div>
             <div className="flex w-full items-center py-4">
               <div
-                className={`tab border-solid border-2 mx-auto px-4 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "companyInformation" ? "bg-red-500 text-white" : ""}`}
+                className={`tab border-solid border-2 mx-auto px-4 text-xs text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "companyInformation" ? "bg-red-500 text-white" : ""}`}
                 onClick={() => switchTab("companyInformation")}
                 >
                   <button className="tablinks">
@@ -988,7 +988,7 @@ export default function Home() {
                   </button>
               </div>
               <div 
-                className={`tab border-solid border-2 mx-auto px-4 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "service" ? "bg-red-500 text-white" : ""}`}
+                className={`tab border-solid border-2 mx-auto px-4 text-xs text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "service" ? "bg-red-500 text-white" : ""}`}
                 onClick={() => switchTab("service")}
                 >
                   <button className="tablinks">
@@ -996,7 +996,7 @@ export default function Home() {
                   </button>
               </div>
               <div 
-                className={`tab border-solid border-2 mx-auto px-4 text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "contactUs" ? "bg-red-500 text-white" : ""}`}
+                className={`tab border-solid border-2 mx-auto px-4 text-xs text-black rounded-2xl border-gray-500 hover:text-white hover:bg-red-500 active:bg-red-600 ${activeTab === "contactUs" ? "bg-red-500 text-white" : ""}`}
                 onClick={() => switchTab("contactUs")}
                 >
                   <button className="tablinks">
