@@ -10,6 +10,7 @@ import { useState } from "react";
 export default function Home() {
   const router = useRouter();
   const storage = getStorage();
+  const [hasCheckboxWarning, setCheckboxWarning] = useState(false);
 
   const handleSubmit = async () => {
     // Initialize variables for picture URLs
@@ -78,7 +79,20 @@ export default function Home() {
     const selectedTypes = Array.from(document.querySelectorAll('input[name="type"]:checked')).map((checkbox) => (checkbox as HTMLInputElement).value);
     
     // Check for errors before submitting
-    if (!formData.companyInformation.name) {
+    if (
+      !formData.companyInformation.name ||
+      !formData.companyInformation.address ||
+      !formData.companyInformation.postcode ||
+      !formData.companyInformation.district ||
+      !formData.companyInformation.state ||
+      !formData.companyInformation.location ||
+      formData.service.type.length === 0 || // Check if at least one checkbox is selected
+      !formData.service.description ||
+      !formData.service.timeStart ||
+      !formData.service.timeEnd ||
+      !formData.contactUs.contact ||
+      !formData.contactUs.email
+      ) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         companyInformation: {
@@ -92,6 +106,7 @@ export default function Home() {
         },
         service: {
           ...prevErrors.service,
+          type: ["Pilih sekurang-kurangnya satu"],
           description: "Deskripsi diperlukan",
           timeStart: "Masa diperlukan",
           timeEnd: "Masa diperlukan",
@@ -103,6 +118,29 @@ export default function Home() {
         }
       }));
       return; // Prevent submission
+    }
+
+    // Check if at least one checkbox is selected
+    const hasSelectedCheckbox = formData.service.type.length > 0;
+
+    if (!hasSelectedCheckbox) {
+      // Set the warning state
+      setCheckboxWarning(true);
+
+      // You can also set an error message in your errors state if needed
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        service: {
+          ...prevErrors.service,
+          type: [], // Set it as an empty array
+        },
+      }));
+    } else {
+      // Reset the warning state if at least one checkbox is selected
+      setCheckboxWarning(false);
+
+      // Proceed with form submission
+      // ...
     }
 
     const dataToSubmit = {
@@ -249,11 +287,25 @@ export default function Home() {
       }
   
       if (tab === 'service' && field === 'type') {
-        // For checkbox inputs in the 'service' section
         const updatedType = prevData.service.type.includes(value)
           ? prevData.service.type.filter((item) => item !== value)
           : [...prevData.service.type, value];
-  
+
+        // Check if at least one checkbox is selected
+        const hasSelectedCheckbox = updatedType.length > 0;
+
+        // Update checkbox errors based on the selected state
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          service: {
+            ...prevErrors.service,
+            type: hasSelectedCheckbox ? [] : ["Pilih sekurang-kurangnya satu"],
+          },
+        }));
+
+        // Set the warning state
+        setCheckboxWarning(!hasSelectedCheckbox);
+
         return {
           ...prevData,
           service: {
@@ -651,6 +703,9 @@ export default function Home() {
                       Aksesori
                     </label>
                   </div>
+                  {errors.service.type.length > 0 && 
+                    <p className="text-red-500 px-4">Pilih sekurang-kurangnya satu</p>
+                  }
                 </div>
                 <div className="flex w-full mt-2 flex-col">
                   <div className="flex flex-row px-4 mb-2">
