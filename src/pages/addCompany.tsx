@@ -1019,7 +1019,7 @@ export default function Home() {
                       className={`rounded-xl w-full ml-1 ${
                         errors.companyInformation.name && "border-red-500 border-2" // Add red border on error
                       }`}
-                      placeholder="Cth: Kedai Baiki Kami" 
+                      placeholder="Kedai Baiki Kami" 
                       required 
                       value={formData.companyInformation.name} 
                       onBlur={() => handleBlur("companyInformation", "name")} // Validate when input loses focus
@@ -1042,7 +1042,7 @@ export default function Home() {
                       className={`rounded-xl w-full ml-1 ${
                         errors.companyInformation.address && "border-red-500 border-2" // Add red border on error
                       }`}
-                      placeholder="Cth: Mercu Summer Suites, Jalan Cendana" 
+                      placeholder="Mercu Summer Suites, Jalan Cendana" 
                       required 
                       value={formData.companyInformation.address} 
                       onBlur={() => handleBlur("companyInformation", "address")} // Validate when input loses focus
@@ -1066,7 +1066,7 @@ export default function Home() {
                         className={`rounded-xl w-full ml-1 ${
                           errors.companyInformation.postcode && "border-red-500 border-2" // Add red border on error
                         }`}
-                        placeholder="Cth: 50250" 
+                        placeholder="50250" 
                         required 
                         value={formData.companyInformation.postcode} 
                         onBlur={() => handleBlur("companyInformation", "postcode")} // Validate when input loses focus
@@ -1089,7 +1089,7 @@ export default function Home() {
                         className={`rounded-xl w-full ml-1 ${
                           errors.companyInformation.district && "border-red-500 border-2" // Add red border on error
                         }`}
-                        placeholder="Cth: Ampang" 
+                        placeholder="Ampang" 
                         required 
                         value={formData.companyInformation.district} 
                         onBlur={() => handleBlur("companyInformation", "district")} // Validate when input loses focus
@@ -1113,7 +1113,7 @@ export default function Home() {
                       className={`rounded-xl w-full ml-1 ${
                         errors.companyInformation.state && "border-red-500 border-2" // Add red border on error
                       }`}
-                      placeholder="Cth: Selangor" 
+                      placeholder="Selangor" 
                       required 
                       value={formData.companyInformation.state} 
                       onBlur={() => handleBlur("companyInformation", "state")} // Validate when input loses focus
@@ -1136,7 +1136,7 @@ export default function Home() {
                       className={`rounded-xl w-full ml-1 ${
                         errors.companyInformation.location && "border-red-500 border-2" // Add red border on error
                       }`}
-                      placeholder="Cth: 3.158880209637858, 101.70491202420591" 
+                      placeholder="3.158880209637858, 101.70491202420591" 
                       required 
                       value={formData.companyInformation.location} 
                       onBlur={() => handleBlur("companyInformation", "location")} // Validate when input loses focus
@@ -1223,7 +1223,7 @@ export default function Home() {
                       className={`rounded-xl w-full ml-1 ${
                         errors.service.description && "border-red-500 border-2" // Add red border on error
                       }`}
-                      placeholder="Cth: Kedai Baiki Kami"
+                      placeholder="Kedai Baiki Kami"
                       value={formData.service.description}
                       onBlur={() => handleBlur("service", "description")} // Validate when input loses focus
                       onChange={(e) => handleInputChange('service', 'description', e.target.value)}
@@ -1338,7 +1338,7 @@ export default function Home() {
                         className={`rounded-xl w-full ml-1 ${
                           errors.contactUs.email && "border-red-500 border-2" // Add red border on error
                         }`}
-                        placeholder="Cth: amanz@dev.my" 
+                        placeholder="amanz@dev.my" 
                         required 
                         value={formData.contactUs.email} 
                         onBlur={() => handleBlur("contactUs", "email")} // Validate when input loses focus
@@ -1361,7 +1361,7 @@ export default function Home() {
                         className={`rounded-xl w-full ml-1 ${
                           errors.contactUs.contact && "border-red-500 border-2" // Add red border on error
                         }`}
-                        placeholder="Cth: 0123456789" 
+                        placeholder="0123456789" 
                         required 
                         value={formData.contactUs.contact} 
                         onBlur={() => handleBlur("contactUs", "contact")} // Validate when input loses focus
@@ -1383,7 +1383,7 @@ export default function Home() {
                       name="websiteUrl" 
                       id="websiteUrl" 
                       className="rounded-xl w-full ml-1" 
-                      placeholder="Cth: https://amanz.my/" 
+                      placeholder="https://amanz.my/" 
                       value={formData.contactUs.websiteUrl} 
                       onChange={(e) => handleInputChange('contactUs', 'websiteUrl', e.target.value)}
                     />
@@ -1399,7 +1399,7 @@ export default function Home() {
                       name="instagramUrl" 
                       id="instagramUrl" 
                       className="rounded-xl w-full ml-1" 
-                      placeholder="Cth: https://www.instagram.com/amanz.my/" 
+                      placeholder="https://www.instagram.com/amanz.my/" 
                       value={formData.contactUs.instagramUrl} 
                       onChange={(e) => handleInputChange('contactUs', 'instagramUrl', e.target.value)}
                     />
@@ -1415,7 +1415,7 @@ export default function Home() {
                       name="twitterUrl" 
                       id="twitterUrl" 
                       className="rounded-xl w-full ml-1" 
-                      placeholder="Cth: https://twitter.com/amanz" 
+                      placeholder="https://twitter.com/amanz" 
                       value={formData.contactUs.twitterUrl} 
                       onChange={(e) => handleInputChange('contactUs', 'twitterUrl', e.target.value)}
                     />
@@ -1431,7 +1431,7 @@ export default function Home() {
                       name="facebookUrl" 
                       id="facebookUrl" 
                       className="rounded-xl w-full ml-1" 
-                      placeholder="Cth: https://www.facebook.com/AmanzNetwork/" 
+                      placeholder="https://www.facebook.com/AmanzNetwork/" 
                       value={formData.contactUs.facebookUrl} 
                       onChange={(e) => handleInputChange('contactUs', 'facebookUrl', e.target.value)}
                     />
